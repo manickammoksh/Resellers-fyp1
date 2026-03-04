@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resellers FYP — Elite Reseller Community</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #F5A623;
+    --gold-light: #FFB84D;
+    --gold-dark: #C47D0E;
+    --orange: #FF6B2B;
+    --orange-light: #FF8C55;
+    --red: #E63946;
+    --green: #2ECC71;
+    --black: #080808;
+    --dark: #0E0E0E;
+    --card: #141414;
+    --card2: #181818;
+    --border: #252525;
+    --border-bright: #333333;
+    --white: #F7F7F2;
+    --muted: #909090;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+  }
+
+  .nav-cta {
+    background: linear-gradient(135deg, #FF6B2B, #F5A623);
+    color: var(--black);
+    padding: 10px 24px;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    box-shadow: 0 2px 16px rgba(255,107,43,0.3);
+  }
+
+  .nav-cta:hover {
+    background: linear-gradient(135deg, #FF8C55, #FFB84D);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(255,107,43,0.5);
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 120px 60px 80px;
+    overflow: hidden;
+  }
+
+  .hero-bg-lines {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(rgba(212,168,67,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(212,168,67,0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(ellipse at 40% 50%, rgba(255,107,43,0.18) 0%, rgba(245,166,35,0.1) 40%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .hero-glow2 {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(230,57,70,0.1) 0%, transparent 70%);
+    top: 20%;
+    right: 10%;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    text-align: center;
+    max-width: 900px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-tag {
+    display: inline-block;
+    border: 1px solid var(--orange);
+    color: var(--orange);
+    background: rgba(255,107,43,0.08);
+    padding: 6px 18px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+
+  .hero-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 10vw, 8.5rem);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    margin-bottom: 12px;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-headline .accent {
+    color: var(--gold);
+    display: block;
+  }
+
+  .hero-sub {
+    font-size: 1.25rem;
+    color: #BBBBBB;
+    max-width: 600px;
+    margin: 28px auto 0;
+    line-height: 1.6;
+    font-weight: 300;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .hero-price-block {
+    margin: 44px auto 0;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+
+  .hero-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+  }
+
+  .hero-price-note {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+  }
+
+  .hero-btn {
+    display: inline-block;
+    margin-top: 28px;
+    background: linear-gradient(135deg, #FF6B2B, #F5A623);
+    color: var(--black);
+    padding: 20px 56px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.8s 0.5s ease both;
+    box-shadow: 0 4px 30px rgba(255,107,43,0.4);
+  }
+
+  .hero-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .hero-btn:hover {
+    background: linear-gradient(135deg, #FF8C55, #FFB84D);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 50px rgba(255,107,43,0.55);
+  }
+
+  .hero-btn:hover::after { opacity: 1; }
+
+  .hero-social-proof {
+    margin-top: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    animation: fadeUp 0.8s 0.6s ease both;
+  }
+
+  .proof-stat strong {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--gold);
+    display: block;
+    line-height: 1;
+  }
+
+  .proof-stat span {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .proof-divider {
+    width: 1px;
+    height: 48px;
+    background: var(--border);
+  }
+
+  /* MARQUEE */
+  .marquee-section {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(90deg, #0E0E0E, #141008, #0E0E0E);
+    padding: 18px 0;
+    overflow: hidden;
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 60px;
+    animation: marquee 20s linear infinite;
+    width: max-content;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .marquee-item {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #BBBBBB;
+    white-space: nowrap;
+  }
+
+  .marquee-item .dot {
+    color: var(--orange);
+    margin-right: 60px;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 100px 60px;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    margin-bottom: 20px;
+  }
+
+  .section-sub {
+    font-size: 1rem;
+    color: #999;
+    max-width: 560px;
+    line-height: 1.7;
+  }
+
+  /* WHAT YOU GET */
+  .offer-section {
+    background: linear-gradient(180deg, #0E0E0E 0%, #0A0805 100%);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .offer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2px;
+    margin-top: 60px;
+  }
+
+  .offer-card {
+    background: var(--card);
+    padding: 36px 32px;
+    border: 1px solid var(--border);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .offer-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--orange), var(--gold));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  .offer-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .offer-card:hover {
+    background: #1c1610;
+    transform: translateY(-3px);
+    border-color: #3a2e1a;
+    box-shadow: 0 8px 32px rgba(255,107,43,0.12);
+  }
+
+  .offer-icon {
+    font-size: 2rem;
+    margin-bottom: 16px;
+  }
+
+  .offer-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 10px;
+    color: var(--white);
+  }
+
+  .offer-card p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* FOR WHO */
+  .for-who-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0;
+    margin-top: 60px;
+    align-items: start;
+  }
+
+  .for-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 40px;
+    transition: all 0.3s;
+  }
+
+  .for-card-yes {
+    border-top: 3px solid var(--green);
+  }
+
+  .for-card-no {
+    border-top: 3px solid var(--red);
+  }
+
+  .for-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  }
+
+  .for-card-badge {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    padding: 6px 14px;
+    display: inline-block;
+  }
+
+  .for-badge-yes {
+    background: rgba(46,204,113,0.1);
+    border: 1px solid rgba(46,204,113,0.3);
+    color: #2ECC71;
+  }
+
+  .for-badge-no {
+    background: rgba(230,57,70,0.1);
+    border: 1px solid rgba(230,57,70,0.3);
+    color: var(--red);
+  }
+
+  .for-card-divider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    gap: 12px;
+    min-height: 100%;
+  }
+
+  .for-card-divider-line {
+    flex: 1;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--border-bright), transparent);
+    min-height: 60px;
+  }
+
+  .for-card-divider-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    background: var(--dark);
+    border: 1px solid var(--border);
+    padding: 6px 10px;
+  }
+
+  .for-list li {
+    list-style: none;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.95rem;
+    color: #CCC;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .for-list li:last-child { border-bottom: none; }
+
+  .check {
+    font-weight: 900;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .check-yes { color: #2ECC71; }
+  .check-no { color: var(--red); }
+
+  /* TESTIMONIALS */
+  .testimonials-section {
+    background: linear-gradient(180deg, #080808 0%, #0c0806 100%);
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 60px;
+  }
+
+  .testimonial-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--orange);
+    padding: 28px 28px 24px;
+    position: relative;
+    transition: all 0.3s;
+  }
+
+  .testimonial-card:nth-child(2) { border-left-color: var(--gold); }
+  .testimonial-card:nth-child(3) { border-left-color: #2ECC71; }
+
+  .testimonial-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    border-color: var(--border-bright);
+  }
+
+  .testimonial-card::before {
+    content: '"';
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 6rem;
+    color: var(--orange);
+    opacity: 0.12;
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    line-height: 1;
+  }
+
+  .testimonial-card:nth-child(2)::before { color: var(--gold); }
+  .testimonial-card:nth-child(3)::before { color: #2ECC71; }
+
+  .testimonial-text {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #CCC;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .testimonial-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--black);
+    flex-shrink: 0;
+  }
+
+  .testimonial-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--white);
+  }
+
+  .testimonial-role {
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  /* OFFER BOX */
+  .offer-box-section {
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+  }
+
+  .offer-box {
+    max-width: 860px;
+    margin: 0 auto;
+    border: 1px solid #3a2e1a;
+    background: linear-gradient(145deg, #161208, #141414);
+    padding: 60px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 80px rgba(255,107,43,0.08), inset 0 1px 0 rgba(245,166,35,0.2);
+  }
+
+  .offer-box::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255,107,43,0.1) 0%, rgba(245,166,35,0.05) 40%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .offer-box::after {
+    content: '';
+    position: absolute;
+    bottom: -100px;
+    left: -100px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(245,166,35,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .offer-box-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .offer-box-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem;
+    color: var(--gold);
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
+
+  .offer-box-price sup {
+    font-size: 2.5rem;
+    vertical-align: super;
+  }
+
+  .offer-box-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+  }
+
+  .offer-box-subtitle {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .offer-line {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .offer-line:last-of-type { border-bottom: none; }
+
+  .offer-line-check {
+    width: 22px;
+    height: 22px;
+    background: rgba(255,107,43,0.15);
+    border: 1px solid var(--orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    color: var(--orange);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .offer-line-text {
+    font-size: 0.95rem;
+    color: #CCC;
+    line-height: 1.5;
+  }
+
+  .offer-line-text strong {
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  .offer-cta-block {
+    text-align: center;
+    margin-top: 48px;
+  }
+
+  .offer-cta {
+    display: inline-block;
+    background: linear-gradient(135deg, #FF6B2B, #F5A623);
+    color: var(--black);
+    padding: 22px 68px;
+    font-weight: 800;
+    font-size: 1.15rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.25s;
+    border: none;
+    box-shadow: 0 6px 40px rgba(255,107,43,0.5);
+    animation: pulseCTA 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulseCTA {
+    0%, 100% { box-shadow: 0 6px 40px rgba(255,107,43,0.5); }
+    50% { box-shadow: 0 6px 60px rgba(255,107,43,0.8); }
+  }
+
+  .offer-cta:hover {
+    background: linear-gradient(135deg, #FF8C55, #FFB84D);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 60px rgba(255,107,43,0.7);
+    animation: none;
+  }
+
+  .offer-guarantee {
+    margin-top: 20px;
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* FAQ */
+  .faq-section { background: var(--black); }
+
+  .faq-list {
+    max-width: 760px;
+    margin: 60px auto 0;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    color: var(--white);
+    text-align: left;
+    padding: 22px 0;
+    font-size: 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    transition: color 0.2s;
+  }
+
+  .faq-question:hover { color: var(--gold); }
+
+  .faq-plus {
+    font-size: 1.4rem;
+    color: var(--gold);
+    flex-shrink: 0;
+    transition: transform 0.3s;
+    font-weight: 300;
+  }
+
+  .faq-item.open .faq-plus { transform: rotate(45deg); }
+
+  .faq-answer {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.7;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+  }
+
+  .faq-item.open .faq-answer {
+    max-height: 300px;
+    padding-bottom: 20px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+    padding: 48px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+  }
+
+  .footer-note {
+    font-size: 0.8rem;
+    color: var(--muted);
+    max-width: 480px;
+    line-height: 1.6;
+  }
+
+  /* URGENCY BAR */
+  .urgency-bar {
+    background: var(--gold);
+    color: var(--black);
+    text-align: center;
+    padding: 12px 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* VSL SECTION */
+  .vsl-section {
+    background: var(--black);
+    padding: 0 60px 80px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .vsl-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .vsl-label {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    border: 1px solid var(--orange);
+    background: rgba(255,107,43,0.08);
+    padding: 5px 14px;
+    margin-bottom: 20px;
+  }
+
+  .vsl-wrapper {
+    position: relative;
+    width: 100%;
+    border: 1px solid #2a2010;
+    box-shadow: 0 0 60px rgba(255,107,43,0.15), 0 0 0 1px rgba(245,166,35,0.1);
+    background: #0c0a06;
+  }
+
+  .vsl-wrapper iframe,
+  .vsl-wrapper video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: none;
+  }
+
+  .vsl-placeholder {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0e0b05, #141008);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vsl-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(rgba(245,166,35,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,166,35,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .vsl-play-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .vsl-play-btn {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FF6B2B, #F5A623);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--black);
+    box-shadow: 0 0 40px rgba(255,107,43,0.5);
+    animation: pulseCTA 2.5s ease-in-out infinite;
+  }
+
+  .vsl-placeholder-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.06em;
+    color: var(--white);
+    opacity: 0.6;
+  }
+
+  .vsl-placeholder-sub {
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .vsl-caption {
+    margin-top: 16px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* OUTCOME BANNER */
+  .outcome-section {
+    background: linear-gradient(135deg, #0f0900, #160c00, #0f0900);
+    border-top: 1px solid #2a1a00;
+    border-bottom: 1px solid #2a1a00;
+    padding: 70px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .outcome-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 20% 50%, rgba(255,107,43,0.12) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(245,166,35,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .outcome-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 60px;
+    position: relative;
+  }
+
+  .outcome-tag {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 12px;
+  }
+
+  .outcome-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    color: var(--white);
+  }
+
+  .outcome-headline span {
+    color: var(--gold);
+  }
+
+  .outcome-divider {
+    width: 1px;
+    height: 120px;
+    background: linear-gradient(to bottom, transparent, var(--orange), transparent);
+  }
+
+  .outcome-text {
+    font-size: 1rem;
+    color: #BBBBBB;
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+
+  .outcome-text strong {
+    color: var(--white);
+  }
+
+  .outcome-cta {
+    display: inline-block;
+    background: linear-gradient(135deg, #FF6B2B, #F5A623);
+    color: var(--black);
+    padding: 16px 36px;
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.25s;
+    box-shadow: 0 4px 24px rgba(255,107,43,0.4);
+  }
+
+  .outcome-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 36px rgba(255,107,43,0.6);
+  }
+
+  /* FINAL CTA */
+  .final-cta-section {
+    background: linear-gradient(180deg, #080808 0%, #0d0700 100%);
+    border-top: 1px solid var(--border);
+    padding: 120px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .final-cta-section::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 600px;
+    background: radial-gradient(ellipse, rgba(255,107,43,0.1) 0%, rgba(245,166,35,0.05) 40%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .final-cta-inner {
+    position: relative;
+    max-width: 740px;
+    margin: 0 auto;
+  }
+
+  .final-cta-tag {
+    display: inline-block;
+    background: rgba(230,57,70,0.15);
+    border: 1px solid var(--red);
+    color: var(--red);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    margin-bottom: 28px;
+  }
+
+  .final-cta-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    margin-bottom: 24px;
+  }
+
+  .final-cta-headline span {
+    color: var(--gold);
+  }
+
+  .final-cta-sub {
+    font-size: 1.05rem;
+    color: #AAAAAA;
+    line-height: 1.7;
+    max-width: 580px;
+    margin: 0 auto 40px;
+  }
+
+  .final-cta-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+    margin-bottom: 24px;
+  }
+
+  .final-cta-price span {
+    font-size: 1rem;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+  }
+
+  .final-cta-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #FF6B2B, #F5A623);
+    color: var(--black);
+    padding: 22px 72px;
+    font-weight: 800;
+    font-size: 1.15rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.25s;
+    box-shadow: 0 6px 40px rgba(255,107,43,0.5);
+    animation: pulseCTA 2.5s ease-in-out infinite;
+  }
+
+  .final-cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 55px rgba(255,107,43,0.7);
+    animation: none;
+  }
+
+  .final-cta-fine {
+    margin-top: 20px;
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    section { padding: 80px 24px; }
+    .hero { padding: 100px 24px 60px; }
+    .for-who-grid { grid-template-columns: 1fr; }
+    .for-card-divider { flex-direction: row; padding: 16px 0; min-height: unset; }
+    .for-card-divider-line { flex: 1; width: unset; height: 1px; min-height: unset; background: linear-gradient(to right, transparent, var(--border-bright), transparent); }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .offer-box { padding: 36px 24px; }
+    .vsl-section { padding: 0 24px 60px; }
+    footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+    .hero-social-proof { flex-wrap: wrap; gap: 20px; }
+    .proof-divider { display: none; }
+    .outcome-section { padding: 60px 24px; }
+    .outcome-inner { grid-template-columns: 1fr; gap: 32px; }
+    .outcome-divider { width: 60px; height: 1px; background: linear-gradient(to right, transparent, var(--orange), transparent); }
+    .final-cta-section { padding: 80px 24px; }
+    .final-cta-btn { padding: 18px 36px; font-size: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- URGENCY BAR -->
+<div class="urgency-bar" style="background: linear-gradient(90deg, #E63946, #FF6B2B, #F5A623); background-size: 200% 100%; animation: gradientShift 3s ease infinite;">
+  ⚡ Limited Spots Available — Doors Close Soon
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Resellers FYP</div>
+  <a href="https://whop.com/resellersfyp-7914/17bd9993-4036-4568-92af-6a1e6e6e05ce/" target="_blank" rel="noopener" class="nav-cta">Join Now — $495</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-lines"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-tag">🔒 Private Community · Limited Access</div>
+    <h1 class="hero-headline">
+      Hit $10K/Month
+      <span class="accent">Reselling.</span>
+    </h1>
+    <p class="hero-sub">
+      The proven system, elite vendors, and insider knowledge to get you to <strong style="color: var(--gold);">$10,000/month within your first 3 months</strong> — if you stay consistent and put in the work.
+    </p>
+    <div class="hero-price-block">
+      <div class="hero-price">$495 <span style="font-size:1.2rem; color: var(--muted); font-family: 'DM Sans';">one-time</span></div>
+      <div class="hero-price-note">Full lifetime access · No monthly fees</div>
+    </div>
+    <a href="https://whop.com/resellersfyp-7914/17bd9993-4036-4568-92af-6a1e6e6e05ce/" target="_blank" rel="noopener" class="hero-btn">Start Your $10K Journey → </a>
+    <div class="hero-social-proof">
+      <div class="proof-stat">
+        <strong>🔥 NOW</strong>
+        <span>Open Enrollment</span>
+      </div>
+      <div class="proof-divider"></div>
+      <div class="proof-stat">
+        <strong>3 Months</strong>
+        <span>To $10K/Month</span>
+      </div>
+      <div class="proof-divider"></div>
+      <div class="proof-stat">
+        <strong>Weekly</strong>
+        <span>Live Group Calls</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VSL SECTION -->
+<section class="vsl-section">
+  <div class="vsl-inner">
+    <div class="vsl-label">Watch This First</div>
+    <div class="vsl-wrapper">
+      <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/Gho-rDjOy1E?si=C5WKCbY982fVJRU-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+    <p class="vsl-caption">⚠️ Watch before joining — Tahj breaks down exactly what's inside and who this is built for.</p>
+  </div>
+</section>
+
+<!-- OUTCOME BANNER -->
+<section class="outcome-section">
+  <div class="outcome-inner">
+    <div class="outcome-left">
+      <div class="outcome-tag">The Goal</div>
+      <h2 class="outcome-headline">$10,000/Month<br><span>In 90 Days.</span></h2>
+    </div>
+    <div class="outcome-divider"></div>
+    <div class="outcome-right">
+      <p class="outcome-text">That's the target. Resellers FYP gives you the vendors, the system, the weekly calls, and the community to get there. The only variable is <strong>you showing up consistently.</strong> If you put in the work, $10K/month within your first 3 months is the outcome we're building toward together.</p>
+      <a href="https://whop.com/resellersfyp-7914/17bd9993-4036-4568-92af-6a1e6e6e05ce/" target="_blank" rel="noopener" class="outcome-cta">I'm Ready — Join Now →</a>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item">Best Vendors<span class="dot">◆</span></span>
+    <span class="marquee-item">High Ticket Reselling<span class="dot">◆</span></span>
+    <span class="marquee-item">Dropshipping Guide<span class="dot">◆</span></span>
+    <span class="marquee-item">Boosting Methods<span class="dot">◆</span></span>
+    <span class="marquee-item">Product Research<span class="dot">◆</span></span>
+    <span class="marquee-item">Weekly Bestsellers List<span class="dot">◆</span></span>
+    <span class="marquee-item">Live Q&amp;A Calls<span class="dot">◆</span></span>
+    <span class="marquee-item">Affiliate Income<span class="dot">◆</span></span>
+    <span class="marquee-item">Best Vendors<span class="dot">◆</span></span>
+    <span class="marquee-item">High Ticket Reselling<span class="dot">◆</span></span>
+    <span class="marquee-item">Dropshipping Guide<span class="dot">◆</span></span>
+    <span class="marquee-item">Boosting Methods<span class="dot">◆</span></span>
+    <span class="marquee-item">Product Research<span class="dot">◆</span></span>
+    <span class="marquee-item">Weekly Bestsellers List<span class="dot">◆</span></span>
+    <span class="marquee-item">Live Q&amp;A Calls<span class="dot">◆</span></span>
+    <span class="marquee-item">Affiliate Income<span class="dot">◆</span></span>
+  </div>
+</div>
+
+<!-- WHAT YOU GET -->
+<section class="offer-section">
+  <div class="section-label">Everything Inside</div>
+  <h2 class="section-title">Built Different.<br>Nothing Held Back.</h2>
+  <p class="section-sub">Every tool, resource, and connection you need to build a serious reselling operation — all under one roof.</p>
+
+  <div class="offer-grid">
+    <div class="offer-card">
+      <div class="offer-icon">🎥</div>
+      <h3>Video Module Library</h3>
+      <p>Step-by-step videos covering listings, sourcing, shipping, and running meetups. Watch exactly how it's done — not just told.</p>
+    </div>
+    <div class="offer-card">
+      <div class="offer-icon">📦</div>
+      <h3>Elite Vendor Rolodex</h3>
+      <p>My personal list of top-tier vendors with lightning-fast shipping times. No more wasting money on unreliable suppliers.</p>
+    </div>
+    <div class="offer-card">
+      <div class="offer-icon">📋</div>
+      <h3>Weekly Hot List</h3>
+      <p>Updated every week — the best-selling items actively moving right now. Stay ahead of the market, not behind it.</p>
+    </div>
+    <div class="offer-card">
+      <div class="offer-icon">📞</div>
+      <h3>Weekly Group Call</h3>
+      <p>Live Q&amp;A every week. Bring your questions, get real answers. Insider tips dropped regularly to keep you winning.</p>
+    </div>
+    <div class="offer-card">
+      <div class="offer-icon">🚀</div>
+      <h3>Boosting Methods</h3>
+      <p>The exact techniques used to push listings to the top and maximize visibility across every major platform.</p>
+    </div>
+    <div class="offer-card">
+      <div class="offer-icon">🛡️</div>
+      <h3>Listing Protection Lessons</h3>
+      <p>Avoid account flags, listing removals, and bans. Learn what to do — and what never to do — to keep your accounts clean.</p>
+    </div>
+    <div class="offer-card">
+      <div class="offer-icon">📦</div>
+      <h3>Dropshipping Blueprint</h3>
+      <p>Full guide to running a dropshipping operation alongside your reselling. More income streams, less hands-on work.</p>
+    </div>
+    <div class="offer-card">
+      <div class="offer-icon">🔗</div>
+      <h3>Affiliate Income Guide</h3>
+      <p>Turn your reselling knowledge into passive income. Full walkthrough on building affiliate revenue from your audience.</p>
+    </div>
+    <div class="offer-card">
+      <div class="offer-icon">💎</div>
+      <h3>High Ticket Reselling Guide</h3>
+      <p>Move into premium products for bigger margins and faster scaling. Learn how to source, authenticate, and flip high-value items.</p>
+    </div>
+    <div class="offer-card">
+      <div class="offer-icon">👥</div>
+      <h3>The Community</h3>
+      <p>Surround yourself with serious resellers already doing real numbers. Network, collaborate, and grow alongside them.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOR WHO -->
+<section style="background: var(--black); border-bottom: 1px solid var(--border);">
+  <div class="section-label">Who This Is For</div>
+  <h2 class="section-title">Be Honest With Yourself.</h2>
+  <div class="for-who-grid">
+
+    <div class="for-card for-card-yes">
+      <div class="for-card-badge for-badge-yes">✅ This IS For You</div>
+      <ul class="for-list">
+        <li><span class="check check-yes">✓</span> Beginners starting from absolute zero</li>
+        <li><span class="check check-yes">✓</span> Resellers stuck under $1K/month who can't break through</li>
+        <li><span class="check check-yes">✓</span> People who want real, fast-shipping suppliers — not random AliExpress vendors</li>
+        <li><span class="check check-yes">✓</span> Resellers ready to hit $10K/month in their first 90 days</li>
+        <li><span class="check check-yes">✓</span> Resellers already doing $10K/month who want to push to $50K/month</li>
+      </ul>
+    </div>
+
+    <div class="for-card-divider">
+      <div class="for-card-divider-line"></div>
+      <div class="for-card-divider-icon">VS</div>
+      <div class="for-card-divider-line"></div>
+    </div>
+
+    <div class="for-card for-card-no">
+      <div class="for-card-badge for-badge-no">❌ This is NOT For You</div>
+      <ul class="for-list">
+        <li><span class="check check-no">✗</span> People looking for a get-rich-quick shortcut with zero effort</li>
+        <li><span class="check check-no">✗</span> People who buy courses and never take action</li>
+        <li><span class="check check-no">✗</span> Anyone not willing to show up consistently and do the work</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div class="section-label">What People Are Saying</div>
+  <h2 class="section-title">Tahj Has Been<br>Doing This.</h2>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <p class="testimonial-text">Tahj walked me through my entire setup one on one. I was lost before — he broke down exactly what to sell, how to price it, and where to source. Went from $0 to my first $4K month because of him personally.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">MJ</div>
+        <div>
+          <div class="testimonial-name">Marcus J.</div>
+          <div class="testimonial-role">$0 → $4K first month with Tahj's guidance</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <p class="testimonial-text">The vendors Tahj put me on to are on another level. I'm talking 2-3 day shipping when my old suppliers were taking 2-3 weeks. My feedback score went up overnight and sales followed. Nothing comes close.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">TR</div>
+        <div>
+          <div class="testimonial-name">Tanya R.</div>
+          <div class="testimonial-role">Feedback score jumped after switching vendors</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <p class="testimonial-text">I hit a wall at $6K/month for almost a year. Tahj looked at what I was doing, pointed out exactly where I was leaving money on the table, and helped me restructure. Crossed $15K the next month.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">DK</div>
+        <div>
+          <div class="testimonial-name">Devon K.</div>
+          <div class="testimonial-role">Scaled from $6K → $15K with Tahj's help</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE OFFER -->
+<section class="offer-box-section" id="join">
+  <div class="section-label" style="text-align:center">The Offer</div>
+  <div class="offer-box">
+    <div class="offer-box-header">
+      <div class="offer-box-title">Resellers FYP</div>
+      <div class="offer-box-price"><sup>$</sup>495</div>
+      <div class="offer-box-subtitle">One-time payment · Full lifetime access · No recurring fees</div>
+    </div>
+
+    <div class="offer-line">
+      <div class="offer-line-check">✓</div>
+      <div class="offer-line-text"><strong>Complete Video Module Library</strong> — Listings, sourcing, shipping &amp; meetups explained step by step</div>
+    </div>
+    <div class="offer-line">
+      <div class="offer-line-check">✓</div>
+      <div class="offer-line-text"><strong>Elite Vendor Access</strong> — My personal fastest-shipping vendor list, updated regularly</div>
+    </div>
+    <div class="offer-line">
+      <div class="offer-line-check">✓</div>
+      <div class="offer-line-text"><strong>Weekly Best Sellers List</strong> — Hot items updated every single week so you never miss a trend</div>
+    </div>
+    <div class="offer-line">
+      <div class="offer-line-check">✓</div>
+      <div class="offer-line-text"><strong>Weekly Live Group Call</strong> — Real-time Q&amp;A and strategy sessions with the community</div>
+    </div>
+    <div class="offer-line">
+      <div class="offer-line-check">✓</div>
+      <div class="offer-line-text"><strong>Listing Removal Protection Course</strong> — Stay compliant and keep your accounts alive</div>
+    </div>
+    <div class="offer-line">
+      <div class="offer-line-check">✓</div>
+      <div class="offer-line-text"><strong>Boosting Methods</strong> — Push your listings to the front and maximize every sale</div>
+    </div>
+    <div class="offer-line">
+      <div class="offer-line-check">✓</div>
+      <div class="offer-line-text"><strong>Full Dropshipping Guide</strong> — Add a second income stream with zero extra inventory</div>
+    </div>
+    <div class="offer-line">
+      <div class="offer-line-check">✓</div>
+      <div class="offer-line-text"><strong>Affiliate Link &amp; Passive Income Guide</strong> — Turn your knowledge into recurring revenue</div>
+    </div>
+    <div class="offer-line">
+      <div class="offer-line-check">✓</div>
+      <div class="offer-line-text"><strong>High Ticket Reselling Guide</strong> — Source &amp; flip premium items for serious margins</div>
+    </div>
+    <div class="offer-line">
+      <div class="offer-line-check">✓</div>
+      <div class="offer-line-text"><strong>Private Community Access</strong> — Network with active resellers already doing big numbers</div>
+    </div>
+
+    <div class="offer-cta-block">
+      <a href="https://whop.com/resellersfyp-7914/17bd9993-4036-4568-92af-6a1e6e6e05ce/" target="_blank" rel="noopener" class="offer-cta">Secure Your Spot Now — $495</a>
+      <div class="offer-guarantee">🔒 Secure Checkout · Instant Access After Payment</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="section-label" style="text-align:center">Common Questions</div>
+  <h2 class="section-title" style="text-align:center">Got Questions?</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Do I need experience to join? <span class="faq-plus">+</span>
+      </button>
+      <div class="faq-answer">Not at all. The community is designed for both beginners and experienced resellers. New members get the full foundation — videos, vendor lists, and systems — to get started fast. Veterans get advanced strategies, high-ticket guidance, and connections to scale.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Is this a monthly subscription? <span class="faq-plus">+</span>
+      </button>
+      <div class="faq-answer">No. $495 is a one-time payment for full lifetime access. No monthly fees, no upsells to get the good stuff. Everything listed is included from day one.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        What platforms does this cover? <span class="faq-plus">+</span>
+      </button>
+      <div class="faq-answer">The training covers all major reselling and marketplace platforms. The strategies, systems, and vendor connections are applicable across the board.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        How do the weekly calls work? <span class="faq-plus">+</span>
+      </button>
+      <div class="faq-answer">Every week there's a live group call where members can submit questions, share wins, and get direct advice. Recordings are saved so you never miss one.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        When do I get access after paying? <span class="faq-plus">+</span>
+      </button>
+      <div class="faq-answer">Instantly. As soon as payment is confirmed you'll receive onboarding instructions and access to the full community, all modules, and all resources.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta-section">
+  <div class="final-cta-inner">
+    <div class="final-cta-tag">⚡ Last Chance</div>
+    <h2 class="final-cta-headline">You're One Decision<br>Away From <span>$10K Months.</span></h2>
+    <p class="final-cta-sub">Every day you wait is another day someone else is taking the sales you could've had. The vendors, the system, the community — it's all inside. All you have to do is show up consistently.</p>
+    <div class="final-cta-price">$495 <span>· One-time · Lifetime Access</span></div>
+    <a href="https://whop.com/resellersfyp-7914/17bd9993-4036-4568-92af-6a1e6e6e05ce/" target="_blank" rel="noopener" class="final-cta-btn">Join Resellers FYP Now →</a>
+    <p class="final-cta-fine">🔒 Secure checkout · Instant access after payment · No monthly fees ever</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Resellers FYP</div>
+  <p class="footer-note">Results vary by individual effort, experience, and market conditions. This community provides education and resources — your success depends on how you apply them.</p>
+</footer>
+
+<script>
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.offer-card, .testimonial-card, .for-card').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
